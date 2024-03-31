@@ -21,10 +21,49 @@ body {
   color: #9DACB5;
 }
 
+.header-menu {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  border: none;
+  background-color: #9DACB5;
+  background-image: none;
+  border-radius: 50%;
+  font-size: 14px;
+  transition: .5s;
+}
+
+.header-menu:hover {
+  background-color: #AABBC5;
+}
+
+.header-menu:active {
+  background-color: #7D8B93;
+  transform: scale(.99);
+}
+
 .main-heading {
   margin: 0;
   font-size: 64px;
   font-weight: 400;
+}
+
+.header-link {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  background-image: url(./img/github-mark-white.svg);
+  background-size: contain;
+  transition: .5s;
+}
+
+.header-link:hover {
+  background-image: url(./img/github-mark-hover.svg);
+}
+
+.header-link:active {
+  background-image: url(./img/github-mark-active.svg);
+  transform: scale(.99);
 }
 
 #text {
