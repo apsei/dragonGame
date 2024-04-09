@@ -34,6 +34,11 @@ const monsters = [
     health: 60
   },
   {
+    name: "mimic",
+    level: 12,
+    health: 100
+  },
+  {
     name: "dragon",
     level: 20,
     health: 300
@@ -83,10 +88,22 @@ const locations = [
     text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;" 
   },
   {
+    name: "treasure",
+    "button text": ["Open chest", "Go to town square", "Fight more monsters"],
+    "button functions": [goCave, goTown, goCave],
+    text: "You find a chest. What you will do?"
+  },
+  {
     name: "easter egg",
     "button text": ["2", "8", "Go to town square?"],
     "button functions": [pickTwo, pickEight, goTown],
     text: "You find a secret game. Pick a number above. Ten numbers will be randomly chosen between 0 and 10. If the number you choose matches one of the random numbers, you win!"
+  },
+  {
+    name: "chest opening",
+    "button text": ["Go to town square", "Go to town square", "Fight more monsters"],
+    "button functions": [goTown, goTown, goCave],
+    text: "You open a chest."
   }
 ];
 
@@ -229,7 +246,10 @@ function defeatMonster() {
   xp += monsters[fighting].level;
   goldText.innerText = gold;
   xpText.innerText = xp;
-  update(locations[4]);
+  function chestFound() {
+    treasureOrMimic(Math.random());
+  }
+  chestFound();
 }
 
 function lose() {
@@ -252,8 +272,19 @@ function restart() {
   goTown();
 }
 
+function treasureOrMimic(chestFound) {
+  if (chestFound <= 0.11) {
+    update(locations[7]);
+  }
+  else update(locations[4]);
+}
+
+function rewardDefiner() {
+
+}
+
 function easterEgg() {
-  update(locations[7]);
+  update(locations[8]);
 }
 
 function pickTwo() {
