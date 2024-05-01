@@ -85,13 +85,13 @@ const locations = [
     name: "win", 
     "button text": ["REPLAY?", "REPLAY?", "REPLAY?"], 
     "button functions": [restart, restart, restart], 
-    text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;" 
+    text: "You defeat the dragon! YOU WIN THE GAME! &#x1F389;"
   },
   {
     name: "treasure",
     "button text": ["Open chest", "Go to town square", "Fight more monsters"],
-    "button functions": [goCave, goTown, goCave],
-    text: "You find a chest. What you will do?"
+    "button functions": [openChest, goTown, goCave],
+    text: "Walking through the cave, you find a chest. What you will do?"
   },
   {
     name: "easter egg",
@@ -104,6 +104,12 @@ const locations = [
     "button text": ["Go to town square", "Go to town square", "Fight more monsters"],
     "button functions": [goTown, goTown, goCave],
     text: "You open a chest."
+  },
+  {
+    name: "mimic encounter",
+    "button text": ["Run away", "Run away", "Fight"],
+    "button functions": [goTown, goTown, fightMimic],
+    text: "You open a chest. It's a mimic! You can fight it or run away."
   }
 ];
 
@@ -188,8 +194,13 @@ function fightBeast() {
   goFight();
 }
 
-function fightDragon() {
+function fightMimic() {
   fighting = 2;
+  goFight();
+}
+
+function fightDragon() {
+  fighting = 3;
   goFight();
 }
 
@@ -273,13 +284,39 @@ function restart() {
 }
 
 function treasureOrMimic(chestFound) {
-  if (chestFound <= 0.11) {
+  if (chestFound <= .1) {
     update(locations[7]);
   }
   else update(locations[4]);
 }
 
-function rewardDefiner() {
+function openChest() {
+  const isReward = Math.random();
+  if (isReward < .25) {
+    update(locations[10]);
+  }
+  else if (isReward < .75) {
+    let rewardAmount = (Math.floor(Math.random() * (((xp * .75) - (xp * .5)) + (xp * .5))));
+    xpOrGold(Math.random());
+    function xpOrGold(reward) {
+      if (reward < .5) {
+        health += rewardAmount;
+        healthText.innerText = health;
+        text.innerText = `You find ${rewardAmount} health!`;
+      }
+      else {
+        gold += rewardAmount;
+        goldText.innerText = gold;
+        text.innerText = `You find ${rewardAmount} gold!`;
+      };
+    }
+  }
+  else {
+    text.innerText = "The chest is empty.";
+  };
+}
+
+function defineReward() {
 
 }
 
